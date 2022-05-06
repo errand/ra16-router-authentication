@@ -1,4 +1,5 @@
 import { useState, useEffect, createContext, useContext} from "react";
+import {useNavigate} from 'react-router-dom'
 
 const AuthContext = createContext(null);
 
@@ -7,6 +8,7 @@ export const AuthContextProvider = (props) => {
   const [message, setMessage] = useState('')
   const [token, setToken] = useState('')
   const [user, setUser] = useState({})
+  const navigate = useNavigate ()
 
   const storage = window.localStorage;
   const storageToken = storage.getItem('token')
@@ -23,7 +25,9 @@ export const AuthContextProvider = (props) => {
       .then(res => res.json())
       .then(response => {
         if(response.token) {
+          setIsAuthenticated(true);
           saveToken(response.token)
+          navigate('/news')
         } else if(response.message) {
           setMessage(response.message)
         }
@@ -41,7 +45,6 @@ export const AuthContextProvider = (props) => {
   const saveToken = token => {
     if(!storageToken) {
       storage.setItem('token', token)
-      setIsAuthenticated(true);
       setToken(token)
     }
   }
@@ -50,6 +53,7 @@ export const AuthContextProvider = (props) => {
     if(storageToken) {
       const savedToken = storage.getItem('token')
       setToken(savedToken)
+      setIsAuthenticated(true);
     }
 
     if(!token) {
@@ -70,7 +74,9 @@ export const AuthContextProvider = (props) => {
           onLogout()
         }
       })
-      .then(res => setUser(res))
+      .then(res => {
+        setUser(res)
+      })
       .catch((error) => {
         console.log(error.response)
       });

@@ -5,23 +5,27 @@ import {
   Routes,
   Route
 } from "react-router-dom";
-import Welcome from "./components/main/Welcome";
-import ProtectedRoute from "./components/ProtectedRoute";
-import News from "./components/main/News";
 import { AuthContextProvider } from "./hooks/useAuth";
+import ProtectedRoute from "./components/ProtectedRoute";
+import Welcome from "./components/main/Welcome";
+import News from "./components/main/News";
+import Page404 from "./components/main/Page404";
 
 export default function App() {
   return (
     <main className="main">
-      <AuthContextProvider>
-        <Router>
-          <Header />
-          <Routes>
-            <Route path="/" element={<Welcome />} />
-            <Route path="/news" element={<ProtectedRoute Component={<News/>} />} />
-          </Routes>
-        </Router>
-      </AuthContextProvider>
+      <Router>
+        <AuthContextProvider>
+        <Header />
+        <Routes>
+          <Route path="/" element={<Welcome />} />
+          <Route exact path='/news' element={<ProtectedRoute/>}>
+            <Route exact path='/news' element={<News/>}/>
+          </Route>
+          <Route path='*' element={<Page404 />}/>
+        </Routes>
+        </AuthContextProvider>
+      </Router>
     </main>
   );
 }
