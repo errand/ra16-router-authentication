@@ -1,10 +1,10 @@
 import {useContext, useEffect, useState} from 'react'
-import AuthContext from "../../contexts/AuthContext";
+import {useAuth} from '../../hooks/useAuth'
 import { Link } from "react-router-dom";
 
 export default function News() {
   const [news, setNews] = useState([])
-  const {token} = useContext(AuthContext)
+  const {token} = useAuth()
 
   useEffect(() => {
     fetch('http://localhost:7070/private/news', {

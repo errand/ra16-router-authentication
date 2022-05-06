@@ -1,10 +1,9 @@
-import {useContext} from 'react'
-import AuthContext from "../../contexts/AuthContext";
+import { useAuth } from "../../hooks/useAuth";
 import LogoutForm from "./LogoutForm";
 import LoginForm from "./LoginForm";
 
 export default function Header() {
-  const { isAuthenticated } = useContext(AuthContext);
+  const { isAuthenticated } = useAuth();
 
   return (
       <header className="bg-light mb-4">

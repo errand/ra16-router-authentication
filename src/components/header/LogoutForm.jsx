@@ -1,9 +1,8 @@
-import {useContext} from "react";
-import AuthContext from "../../contexts/AuthContext";
+import { useAuth } from "../../hooks/useAuth";
 
 export default function LoginForm() {
 
-  const {onLogout, user} = useContext(AuthContext)
+  const {onLogout, user} = useAuth()
   return (
     <div className={'loggedIn d-flex align-items-center'}>
       <div className={'me-2'}>Hello, {user && user.name}</div>

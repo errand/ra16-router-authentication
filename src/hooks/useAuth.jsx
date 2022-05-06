@@ -1,7 +1,8 @@
-import React, { useState, useEffect} from "react";
-import AuthContext from "../contexts/AuthContext";
+import { useState, useEffect, createContext, useContext} from "react";
 
-export default function AuthContextProvider(props) {
+const AuthContext = createContext([]);
+
+export const AuthContextProvider = (props) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [message, setMessage] = useState('')
   const [token, setToken] = useState('')
@@ -75,8 +76,10 @@ export default function AuthContextProvider(props) {
   }, [token, storage, storageToken]);
 
   return (
-    <AuthContext.Provider value={{isAuthenticated, onLogin, onLogout, message, user, token}}>
+    <AuthContext.Provider value={{isAuthenticated, setIsAuthenticated, onLogin, onLogout, message, user, token}}>
       {props.children}
     </AuthContext.Provider>
   );
 };
+
+export const useAuth = () => useContext(AuthContext);

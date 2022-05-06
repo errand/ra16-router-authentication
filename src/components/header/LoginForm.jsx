@@ -1,10 +1,10 @@
-import { useContext, useState } from 'react';
-import AuthContext from "../../contexts/AuthContext";
+import { useState } from 'react';
+import { useAuth } from "../../hooks/useAuth";
 
 export default function LoginForm() {
   const [user, setUser] = useState('')
   const [password, setPassword] = useState('')
-  const {onLogin, message} = useContext(AuthContext)
+  const {onLogin, message} = useAuth()
   return (
     <form>
       <div className={'form-group d-flex'}>
