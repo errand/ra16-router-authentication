@@ -1,6 +1,6 @@
 import { useState, useEffect, createContext, useContext} from "react";
 
-const AuthContext = createContext([]);
+const AuthContext = createContext(null);
 
 export const AuthContextProvider = (props) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -41,6 +41,7 @@ export const AuthContextProvider = (props) => {
   const saveToken = token => {
     if(!storageToken) {
       storage.setItem('token', token)
+      setIsAuthenticated(true);
       setToken(token)
     }
   }
@@ -73,7 +74,7 @@ export const AuthContextProvider = (props) => {
       .catch((error) => {
         console.log(error.response)
       });
-  }, [token, storage, storageToken]);
+  }, [isAuthenticated, token, storage, storageToken]);
 
   return (
     <AuthContext.Provider value={{isAuthenticated, setIsAuthenticated, onLogin, onLogout, message, user, token}}>

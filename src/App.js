@@ -11,7 +11,6 @@ import News from "./components/main/News";
 import { AuthContextProvider } from "./hooks/useAuth";
 
 export default function App() {
-
   return (
     <main className="main">
       <AuthContextProvider>
